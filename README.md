@@ -1,3 +1,13 @@
+# Calculator React Project
+
+My first project with react.
+
+my basics notions about React.
+
+I separated the contents studied by cards. Can be viewed by running <strong>npm start</strong>.
+
+this is my beginning of studies. Enjoy 😁
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
