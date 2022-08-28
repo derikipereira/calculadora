@@ -2,7 +2,7 @@
 
 My first project with react.
 
-my basics notions about React.
+Basics notions about React.
 
 # Getting Started with Create React App
 
