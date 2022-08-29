@@ -4,10 +4,11 @@ import Button from "../components/Button";
 import Display from "../components/Display";
 
 const inicialState = {
+    valueOpera: "",
     displayValue: '0',
     clearDisplay: false,
     operation: null,
-    values: [0, 0],
+    values: [0.0, 0.0],
     current: 0
 }
 
@@ -21,26 +22,145 @@ export default class Calculator extends Component {
 
     setOperation(operation) {
         if (this.state.current === 0) {
-            this.setState({ operation, current: 1, clearDisplayFlag: true })
-        } else {
-            const equals = operation === '='
-            const currentOperation = this.state.operation
-
-            const values = [...this.state.values]
-            try{
-                values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
-            } catch(e){
-                values[0] = this.state.values[0]
-            }
+            this.setState({ operation, current: 1, clearDisplay: true })
             
-            values[1] = 0
+            const valor = this.state.displayValue + " " + operation
             this.setState({
-                displayValue: values[0],
-                operation: equals ? null : operation,
-                current: equals ? 0 : 1,
-                clearDisplay: !equals,
-                values
+                valueOpera: valor,
             })
+        } else {
+
+            const valor = this.state.values
+            console.log(valor)
+
+            if (operation === "=") {
+                console.log("entrou no if =")
+                if (this.state.operation === "+") {
+                    console.log("antes")
+                    valor[0] = valor[0] + valor[1]
+                    console.log("entrou no if = e if + ", valor[0])
+                }
+                else if (this.state.operation === "-") {
+                    valor[0] = valor[0] - valor[1]
+                }
+                else if (this.state.operation === "/") {
+                    valor[0] = valor[0] / valor[1]
+                }
+                else if (this.state.operation === "*") {
+                    valor[0] = valor[0] * valor[1]
+                }
+                
+                const displayOpera = this.state.valueOpera +" " + valor[1] + " ="
+
+                valor[1] = 0
+                
+                this.setState({
+                    valueOpera: displayOpera,
+                    displayValue: valor[0],
+                    operation: null,
+                    current: 0,
+                    clearDisplay: false,
+                    values: valor
+                })
+            }
+            else if (operation === "+") {
+                console.log("entrou no if +")
+                if (this.state.operation === "+") {
+                    console.log("antes")
+                    valor[0] = valor[0] + valor[1]
+                    console.log("entrou no if = e if + ", valor[0])
+                }
+                else if (this.state.operation === "-") {
+                    valor[0] = valor[0] - valor[1]
+                }
+                else if (this.state.operation === "/") {
+                    valor[0] = valor[0] / valor[1]
+                }
+                else if (this.state.operation === "*") {
+                    valor[0] = valor[0] * valor[1]
+                }
+                valor[1] = 0
+                this.setState({
+                    displayValue: valor[0],
+                    operation: operation,
+                    current: 1,
+                    clearDisplay: true,
+                    values: valor
+                })
+            }
+            else if (operation === "-") {
+                console.log("entrou no if -")
+                if (this.state.operation === "+") {
+                    console.log("antes")
+                    valor[0] = valor[0] + valor[1]
+                    console.log("entrou no if = e if + ", valor[0])
+                }
+                else if (this.state.operation === "-") {
+                    valor[0] = valor[0] - valor[1]
+                }
+                else if (this.state.operation === "/") {
+                    valor[0] = valor[0] / valor[1]
+                }
+                else if (this.state.operation === "*") {
+                    valor[0] = valor[0] * valor[1]
+                }
+                this.setState({
+                    displayValue: valor[0],
+                    operation: operation,
+                    current: 1,
+                    clearDisplay: true,
+                    values: valor
+                })
+
+            }
+            else if (operation === "*") {
+                console.log("entrou no if -")
+                if (this.state.operation === "+") {
+                    console.log("antes")
+                    valor[0] = valor[0] + valor[1]
+                    console.log("entrou no if = e if + ", valor[0])
+                }
+                else if (this.state.operation === "-") {
+                    valor[0] = valor[0] - valor[1]
+                }
+                else if (this.state.operation === "/") {
+                    valor[0] = valor[0] / valor[1]
+                }
+                else if (this.state.operation === "*") {
+                    valor[0] = valor[0] * valor[1]
+                }
+                this.setState({
+                    displayValue: valor[0],
+                    operation: operation,
+                    current: 1,
+                    clearDisplay: true,
+                    values: valor
+                })
+            }
+            else if (operation === "/") {
+                console.log("entrou no if -")
+                if (this.state.operation === "+") {
+                    console.log("antes")
+                    valor[0] = valor[0] + valor[1]
+                    console.log("entrou no if = e if + ", valor[0])
+                }
+                else if (this.state.operation === "-") {
+                    valor[0] = valor[0] - valor[1]
+                }
+                else if (this.state.operation === "/") {
+                    valor[0] = valor[0] / valor[1]
+                }
+                else if (this.state.operation === "*") {
+                    valor[0] = valor[0] * valor[1]
+                }
+                this.setState({
+                    displayValue: valor[0],
+                    operation: operation,
+                    current: 1,
+                    clearDisplay: true,
+                    values: valor
+                })
+            }
         }
     }
 
@@ -49,8 +169,7 @@ export default class Calculator extends Component {
             return
         }
 
-        const clearDisplay = this.state.displayValue === "0"
-            || this.state.clearDisplay
+        const clearDisplay = this.state.displayValue === "0" || this.state.clearDisplay
         const currentValue = clearDisplay ? "" : this.state.displayValue
         const displayValue = currentValue + digit
         this.setState({ displayValue, clearDisplay: false })
@@ -73,7 +192,7 @@ export default class Calculator extends Component {
         const clearMemory = e => this.clearMemory()
         return (
             <div className="calculator">
-                <Display value={this.state.displayValue}></Display>
+                <Display value={this.state.displayValue} valueOpera={this.state.valueOpera}></Display>
                 <Button label="AC" click={clearMemory} triple ></Button>
                 <Button label="/" click={setOperation} operation ></Button>
                 <Button label="7" click={addDigit}></Button>

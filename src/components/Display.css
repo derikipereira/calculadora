@@ -1,11 +1,18 @@
 .display {
     grid-column: span 4;
+    grid-row: 1;
     background-color: #0004;
 
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    display: block;
+    text-align: end;
     padding: 13px;
     font-size: 1.7em;
     overflow: hidden;
+}
+.display .atual{
+    width: 100%;
+}
+.display .opera{
+    width: 100%;
+    font-size: 0.5em;
 }
